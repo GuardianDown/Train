@@ -168,6 +168,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trainData: {fileID: 11400000, guid: 5fd534187b8d72249863f0493ccb6d70, type: 2}
   _pathCreatorData: {fileID: 11400000, guid: 0529205e00c8d6e4d92400683c292c90, type: 2}
+  _stationsData:
+  - {fileID: 11400000, guid: cd202603629d8dd49b1074960edda782, type: 2}
+  - {fileID: 11400000, guid: 7cd3c22b14d86144d85ff78ea95f90cd, type: 2}
+  - {fileID: 11400000, guid: 22428abdcbfbb724fac7ad651c294cf6, type: 2}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
