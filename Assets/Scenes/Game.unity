@@ -173,6 +173,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7cd3c22b14d86144d85ff78ea95f90cd, type: 2}
   - {fileID: 11400000, guid: 22428abdcbfbb724fac7ad651c294cf6, type: 2}
   _trainControlViewPrefab: {fileID: 4156667596220832158, guid: e7f660c6c076bba4f8ee40c49d2b7acc, type: 3}
+  joystick: {fileID: 8170153791668043265, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

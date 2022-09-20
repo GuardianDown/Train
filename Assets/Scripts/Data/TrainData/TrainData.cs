@@ -13,10 +13,14 @@ namespace Train.TrainMovement
         private float _maxSpeed;
 
         [SerializeField]
+        private float _acceleration;
+
+        [SerializeField]
         private EndOfPathInstruction _endOfPathInstruction;
 
         public GameObject TrainViewPrefab => _trainViewPrefab;
         public float MaxSpeed => _maxSpeed;
+        public float Acceleration => _acceleration;
         public EndOfPathInstruction EndOfPathInstruction => _endOfPathInstruction;
     }
 }
