@@ -1,9 +1,11 @@
 using PathCreation;
 using System;
+using Train.Bonuses;
 using Train.Stations;
 using Train.TrainMovement;
 using Train.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using PathCreatorData = Train.TrainMovement.PathCreatorData;
 
 namespace Train.Infrastucture
@@ -20,10 +22,16 @@ namespace Train.Infrastucture
         private StationData[] _stationsData = null;
 
         [SerializeField]
-        private TrainControlView _trainControlViewPrefab = null;
+        private Canvas _canvasPrefab = null;
 
         [SerializeField]
-        private Joystick joystick = null;
+        private Button _takeBonusButtonPrefab = null;
+
+        [SerializeField]
+        private Joystick _joystickPrefab = null;
+
+        [SerializeField]
+        private Text _bonusViewPrefab = null;
 
         private PathCreator _pathCreator;
         private GameObject _trainView;
@@ -31,15 +39,20 @@ namespace Train.Infrastucture
         private IStation[] _stations;
         private IActiveStationsQueue _activeStationQueue;
         private IDisposable _takeBonusButtonActivator;
-        private TrainControlView _trainControlView;
+        private Button _takeBonusButton;
         private Joystick _joystick;
         private IMovement _trainMovement;
+        private Canvas _canvas;
+        private Text _bonusView;
+        private IDisposable _bonusCounter;
 
         private void Awake()
         {
             _pathCreator = Instantiate(_pathCreatorData.PathCreatorPrefab, _pathCreatorData.SpawnPosition, Quaternion.identity);
             _trainView = Instantiate(_trainData.TrainViewPrefab);
-            _trainControlView = Instantiate(_trainControlViewPrefab);
+            _canvas = Instantiate(_canvasPrefab);
+            _takeBonusButton = Instantiate(_takeBonusButtonPrefab, _canvas.transform);
+            _bonusView = Instantiate(_bonusViewPrefab, _canvas.transform);
             _stations = new IStation[_stationsData.Length];
             for(int i = 0; i < _stationsData.Length; ++i)
             {
@@ -52,10 +65,11 @@ namespace Train.Infrastucture
             _pathFollower = new PathFollower(_pathCreator, _trainView.transform,
                 _trainData.MaxSpeed, _trainData.Acceleration, _trainData.EndOfPathInstruction);
             _pathFollower.StartFollow();
-            _takeBonusButtonActivator = new TakeBonusButtonActivator(_trainControlView.TakeBonusButton, _activeStationQueue, _pathFollower);
-            _joystick = Instantiate(joystick, _trainControlView.transform);
+            _takeBonusButtonActivator = new TakeBonusButtonActivator(_takeBonusButton, _activeStationQueue, _pathFollower);
+            _joystick = Instantiate(_joystickPrefab, _canvas.transform);
             _trainMovement = new Movement(_pathFollower, _joystick);
             _trainMovement.StartMovement();
+            _bonusCounter = new BonusCounter(_takeBonusButton, _activeStationQueue, _bonusView);
         }
 
         private void OnDestroy()
@@ -66,6 +80,7 @@ namespace Train.Infrastucture
             foreach (IStation station in _stations)
                 station.Dispose();
             _trainMovement.Dispose();
+            _bonusCounter.Dispose();
         }
     }
 }

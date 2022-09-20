@@ -28,6 +28,12 @@ namespace Train.Stations
 
         public void Dispose() => Unsubscribe();
 
+        public void Clear()
+        {
+            _activeStations.Clear();
+            onAllStationsUnactive?.Invoke();
+        }
+
         private void Subscribe()
         {
             foreach (KeyValuePair<string, IStation> station in _allStations)
@@ -54,10 +60,11 @@ namespace Train.Stations
 
         private void RemoveStation(string stationID)
         {
-            _activeStations.Remove(_allStations[stationID]);
-            if (_activeStations.Count == 0)
+            if(_activeStations.Contains(_allStations[stationID]))
             {
-                onAllStationsUnactive?.Invoke();
+                _activeStations.Remove(_allStations[stationID]);
+                if (_activeStations.Count == 0)
+                    onAllStationsUnactive?.Invoke();
             }
         }
     }

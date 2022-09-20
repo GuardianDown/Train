@@ -9,5 +9,7 @@ namespace Train.Stations
 
         event Action onAnyStationActive;
         event Action onAllStationsUnactive;
+
+        void Clear();
     }
 }
