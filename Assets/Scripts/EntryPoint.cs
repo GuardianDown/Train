@@ -1,6 +1,8 @@
 using PathCreation;
+using System;
 using Train.Stations;
 using Train.TrainMovement;
+using Train.UI;
 using UnityEngine;
 using PathCreatorData = Train.TrainMovement.PathCreatorData;
 
@@ -17,23 +19,43 @@ namespace Train.Infrastucture
         [SerializeField]
         private StationData[] _stationsData = null;
 
+        [SerializeField]
+        private TrainControlView _trainControlViewPrefab = null;
+
         private PathCreator _pathCreator;
         private GameObject _trainView;
         private IPathFollower _pathFollower;
+        private IStation[] _stations;
+        private IActiveStationsQueue _activeStationQueue;
+        private IDisposable _takeBonusButtonActivator;
+        private TrainControlView _trainControlView;
 
         private void Awake()
         {
             _pathCreator = Instantiate(_pathCreatorData.PathCreatorPrefab, _pathCreatorData.SpawnPosition, Quaternion.identity);
             _trainView = Instantiate(_trainData.TrainViewPrefab);
-            foreach(StationData stationData in _stationsData)
+            _trainControlView = Instantiate(_trainControlViewPrefab);
+            _stations = new IStation[_stationsData.Length];
+            for(int i = 0; i < _stationsData.Length; ++i)
             {
-                AbstractStationView stationView = Instantiate(stationData.StationViewPrefab);
-                Station station = new Station(stationView, stationData.StationRadius, _pathCreator, stationData.PositionOnPath);
+                AbstractStationView stationView = Instantiate(_stationsData[i].StationViewPrefab);
+                IStation station = new Station(stationView, _stationsData[i].ID, _stationsData[i].StationRadius, 
+                    _pathCreator, _stationsData[i].PositionOnPath, _stationsData[i].AmountOfBonuses);
+                _stations[i] = station;
             }
-            _pathFollower = new PathFollower(_pathCreator, _trainView.transform, _trainData.Speed, _trainData.EndOfPathInstruction);
+            _activeStationQueue = new ActiveStationsQueue(_stations);
+            _takeBonusButtonActivator = new TakeBonusButtonActivator(_trainControlView.TakeBonusButton, _activeStationQueue);
+            _pathFollower = new PathFollower(_pathCreator, _trainView.transform, _trainData.MaxSpeed, _trainData.EndOfPathInstruction);
             _pathFollower.StartFollow();
         }
 
-        private void OnDestroy() => _pathFollower.Dispose();
+        private void OnDestroy()
+        {
+            _pathFollower.Dispose();
+            _activeStationQueue.Dispose();
+            _takeBonusButtonActivator.Dispose();
+            foreach (IStation station in _stations)
+                station.Dispose();
+        }
     }
 }
