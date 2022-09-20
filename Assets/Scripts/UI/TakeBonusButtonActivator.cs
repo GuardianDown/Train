@@ -1,5 +1,7 @@
 using System;
 using Train.Stations;
+using Train.TrainMovement;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Train.UI
@@ -8,11 +10,13 @@ namespace Train.UI
     {
         private readonly Button _takeBonusButton;
         private readonly IActiveStationsQueue _activeStationsQueue;
+        private readonly IPathFollower _pathFollower;
 
-        public TakeBonusButtonActivator(Button takeBonusButton, IActiveStationsQueue activeStationsQueue)
+        public TakeBonusButtonActivator(Button takeBonusButton, IActiveStationsQueue activeStationsQueue, IPathFollower pathFollower)
         {
             _takeBonusButton = takeBonusButton;
             _activeStationsQueue = activeStationsQueue;
+            _pathFollower = pathFollower;
 
             Subscribe();
         }
@@ -23,16 +27,27 @@ namespace Train.UI
         {
             _activeStationsQueue.onAnyStationActive += EnableButton;
             _activeStationsQueue.onAllStationsUnactive += DisableButton;
+            _pathFollower.onStopMovement += EnableButton;
+            _pathFollower.onStartMovement += DisableButton;
         }
 
         private void Unsubscribe()
         {
             _activeStationsQueue.onAnyStationActive -= EnableButton;
             _activeStationsQueue.onAllStationsUnactive -= DisableButton;
+            _pathFollower.onStopMovement -= EnableButton;
+            _pathFollower.onStartMovement -= DisableButton;
         }
 
-        private void EnableButton() => _takeBonusButton.gameObject.SetActive(true);
+        private void EnableButton()
+        {
+            if(_pathFollower.Speed <= 0f && _activeStationsQueue.ActiveStations.Count > 0)
+                _takeBonusButton.gameObject.SetActive(true);
+        }
 
-        private void DisableButton() => _takeBonusButton.gameObject.SetActive(false);
+        private void DisableButton()
+        {
+            _takeBonusButton.gameObject.SetActive(false);
+        }
     }
 }

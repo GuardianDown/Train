@@ -49,10 +49,10 @@ namespace Train.Infrastucture
                 _stations[i] = station;
             }
             _activeStationQueue = new ActiveStationsQueue(_stations);
-            _takeBonusButtonActivator = new TakeBonusButtonActivator(_trainControlView.TakeBonusButton, _activeStationQueue);
-            _pathFollower = new PathFollower(_pathCreator, _trainView.transform, 
+            _pathFollower = new PathFollower(_pathCreator, _trainView.transform,
                 _trainData.MaxSpeed, _trainData.Acceleration, _trainData.EndOfPathInstruction);
             _pathFollower.StartFollow();
+            _takeBonusButtonActivator = new TakeBonusButtonActivator(_trainControlView.TakeBonusButton, _activeStationQueue, _pathFollower);
             _joystick = Instantiate(joystick, _trainControlView.transform);
             _trainMovement = new Movement(_pathFollower, _joystick);
             _trainMovement.StartMovement();
