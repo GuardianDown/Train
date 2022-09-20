@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: StationData1
   m_EditorClassIdentifier: 
   _stationViewPrefab: {fileID: 983251221919265134, guid: c904628108f2daf43bec19d1b67f3f5d, type: 3}
+  _id: 1
   _stationRadius: 3
   _positionOnPath: 3
+  _amountOfBonuses: 0
