@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: TrainData
   m_EditorClassIdentifier: 
   _trainViewPrefab: {fileID: 7217117277713619183, guid: 94a29a5e5bddf67428b2352cab6083bb, type: 3}
-  _speed: 5
+  _maxSpeed: 3
+  _acceleration: 0.01
   _endOfPathInstruction: 0

@@ -9,17 +9,33 @@ namespace Train.TrainMovement
     {
         private readonly PathCreator _pathCreator;
         private readonly Transform _followerView;
+        private readonly float _maxSpeed;
 
+        private float _acceleration;
         private float _speed;
         private EndOfPathInstruction _endOfPathInstruction;
         private CancellationTokenSource _cancellationTokenSource;
         private Task _followTask;
 
-        public PathFollower(PathCreator pathCreator, Transform followerView, float speed, EndOfPathInstruction endOfPathInstruction)
+        public float Input { get; set; }
+
+        private float Speed
+        {
+            get => _speed;
+            set
+            {
+                if (value >= 0f && value <= _maxSpeed)
+                    _speed = value;
+            }
+        }
+
+        public PathFollower(PathCreator pathCreator, Transform followerView, 
+            float maxSpeed, float acceleration, EndOfPathInstruction endOfPathInstruction)
         {
             _pathCreator = pathCreator;
             _followerView = followerView;
-            _speed = speed;
+            _maxSpeed = maxSpeed;
+            _acceleration = acceleration;
             _endOfPathInstruction = endOfPathInstruction;
         }
 
@@ -53,7 +69,8 @@ namespace Train.TrainMovement
             {
                 while (!token.IsCancellationRequested)
                 {
-                    distanceTravelled += _speed * Time.deltaTime;
+                    Speed += Input * _acceleration;
+                    distanceTravelled += Speed * Time.deltaTime;
                     _followerView.position = _pathCreator.path.GetPointAtDistance(distanceTravelled, _endOfPathInstruction);
                     _followerView.rotation = _pathCreator.path.GetRotationAtDistance(distanceTravelled, _endOfPathInstruction);
                     await Task.Yield();

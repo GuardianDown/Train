@@ -22,6 +22,9 @@ namespace Train.Infrastucture
         [SerializeField]
         private TrainControlView _trainControlViewPrefab = null;
 
+        [SerializeField]
+        private Joystick joystick = null;
+
         private PathCreator _pathCreator;
         private GameObject _trainView;
         private IPathFollower _pathFollower;
@@ -29,6 +32,8 @@ namespace Train.Infrastucture
         private IActiveStationsQueue _activeStationQueue;
         private IDisposable _takeBonusButtonActivator;
         private TrainControlView _trainControlView;
+        private Joystick _joystick;
+        private IMovement _trainMovement;
 
         private void Awake()
         {
@@ -45,8 +50,12 @@ namespace Train.Infrastucture
             }
             _activeStationQueue = new ActiveStationsQueue(_stations);
             _takeBonusButtonActivator = new TakeBonusButtonActivator(_trainControlView.TakeBonusButton, _activeStationQueue);
-            _pathFollower = new PathFollower(_pathCreator, _trainView.transform, _trainData.MaxSpeed, _trainData.EndOfPathInstruction);
+            _pathFollower = new PathFollower(_pathCreator, _trainView.transform, 
+                _trainData.MaxSpeed, _trainData.Acceleration, _trainData.EndOfPathInstruction);
             _pathFollower.StartFollow();
+            _joystick = Instantiate(joystick, _trainControlView.transform);
+            _trainMovement = new Movement(_pathFollower, _joystick);
+            _trainMovement.StartMovement();
         }
 
         private void OnDestroy()
@@ -56,6 +65,7 @@ namespace Train.Infrastucture
             _takeBonusButtonActivator.Dispose();
             foreach (IStation station in _stations)
                 station.Dispose();
+            _trainMovement.Dispose();
         }
     }
 }
