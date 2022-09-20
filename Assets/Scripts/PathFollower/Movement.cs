@@ -1,10 +1,17 @@
 using System.Threading;
 using System.Threading.Tasks;
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
 
 namespace Train.TrainMovement
 {
     public class Movement : IMovement
     {
+#if UNITY_EDITOR
+        private const string VerticalAxisName = "Vertical";
+#endif
+
         private readonly IPathFollower _pathFollower;
         private readonly Joystick _joystick;
 
@@ -41,11 +48,17 @@ namespace Train.TrainMovement
 
         private async Task Move(CancellationToken token)
         {
+            float currentInput;
             try
             {
                 while (!token.IsCancellationRequested)
                 {
-                    _pathFollower.Input = _joystick.Vertical;
+                    currentInput = 0f;
+#if UNITY_EDITOR
+                    currentInput += Input.GetAxis(VerticalAxisName);
+#endif
+                    currentInput += _joystick.Vertical;
+                    _pathFollower.Input = currentInput;
                     await Task.Yield();
                 }
             }
