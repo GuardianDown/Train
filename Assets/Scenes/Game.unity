@@ -172,8 +172,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd202603629d8dd49b1074960edda782, type: 2}
   - {fileID: 11400000, guid: 7cd3c22b14d86144d85ff78ea95f90cd, type: 2}
   - {fileID: 11400000, guid: 22428abdcbfbb724fac7ad651c294cf6, type: 2}
-  _trainControlViewPrefab: {fileID: 4156667596220832158, guid: e7f660c6c076bba4f8ee40c49d2b7acc, type: 3}
-  joystick: {fileID: 8170153791668043265, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
+  _canvasPrefab: {fileID: 4156667596220832131, guid: e7f660c6c076bba4f8ee40c49d2b7acc, type: 3}
+  _takeBonusButtonPrefab: {fileID: 4782468450633462106, guid: 6686eee7a02499b4cb24f4372be5a030, type: 3}
+  _joystickPrefab: {fileID: 8170153791668043265, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
+  _bonusViewPrefab: {fileID: 4024444756966416339, guid: 6881ee6e49a1a66459af114a6a81403c, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
