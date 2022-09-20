@@ -1,4 +1,5 @@
 using PathCreation;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -17,15 +18,29 @@ namespace Train.TrainMovement
         private CancellationTokenSource _cancellationTokenSource;
         private Task _followTask;
 
+        public event Action onStartMovement;
+        public event Action onStopMovement;
+
         public float Input { get; set; }
 
-        private float Speed
+        public float Speed
         {
             get => _speed;
-            set
+            private set
             {
                 if (value >= 0f && value <= _maxSpeed)
+                {
+                    if (value > 0f && _speed == 0f)
+                    {
+                        onStartMovement?.Invoke();
+                    }
                     _speed = value;
+                }
+                else if(value < 0f)
+                {
+                    _speed = 0f;
+                    onStopMovement?.Invoke();
+                }
             }
         }
 
