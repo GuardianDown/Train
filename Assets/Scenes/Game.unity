@@ -180,8 +180,9 @@ MonoBehaviour:
   - {fileID: 1772050220265920363, guid: ded9495a2f6a26a4ba3ad2d732909f57, type: 3}
   - {fileID: 1462233900395001432, guid: 5b017f45a1936954887b7f6d3b21d992, type: 3}
   _setNextCameraButtonPrefab: {fileID: 8369978003639633240, guid: ca4bb0dfa30a31d418cae032838862cb, type: 3}
-  _gameTime: 60
+  _gameTime: 6
   _timerViewPrefab: {fileID: 804784700301683096, guid: 79292139fd12b904a88758b177dba733, type: 3}
+  _resultViewPrefab: {fileID: 1743929771, guid: 3efaf3a3da48d17458ee653e03d893ae, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,6 @@ namespace Train.UI
     {
         [SerializeField]
         private Text text = null;
-        protected override void UpdateView(int amountOfBonuses) => text.text = amountOfBonuses.ToString();
+        public override void UpdateView(int amountOfBonuses) => text.text = amountOfBonuses.ToString();
     }
 }

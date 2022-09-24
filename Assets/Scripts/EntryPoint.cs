@@ -10,6 +10,7 @@ using PathCreatorData = Train.TrainMovement.PathCreatorData;
 using Cinemachine;
 using Train.Cameras;
 using Train.Timer;
+using Train.Results;
 
 namespace Train.Infrastucture
 {
@@ -48,6 +49,9 @@ namespace Train.Infrastucture
         [SerializeField]
         private AbstractTimerView _timerViewPrefab = null;
 
+        [SerializeField]
+        private ResultView _resultViewPrefab = null;
+
         private PathCreator _pathCreator;
         private GameObject _trainView;
         private IPathFollower _pathFollower;
@@ -66,6 +70,8 @@ namespace Train.Infrastucture
         private BonusesData _bonusesData;
         private ITimer _timer;
         private AbstractTimerView _timerView;
+        private IGameOver _gameOver;
+        private IDisposable _resultViewInstaller;
 
         private void Awake()
         {
@@ -112,6 +118,8 @@ namespace Train.Infrastucture
             _timerView = Instantiate(_timerViewPrefab, _canvas.transform);
             _timerView.Construct(_timer);
             _timer.StartTimer();
+            _gameOver = new GameOverByTime(_timer);
+            _resultViewInstaller = new ResultViewInstaller(_gameOver, _resultViewPrefab, _bonusesData);
         }
 
         private void OnDestroy()
@@ -123,6 +131,8 @@ namespace Train.Infrastucture
                 station.Dispose();
             _trainMovement.Dispose();
             _timer.StopTimer();
+            _gameOver.Dispose();
+            _resultViewInstaller.Dispose();
         }
     }
 }
