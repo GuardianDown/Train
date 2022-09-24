@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using PathCreatorData = Train.TrainMovement.PathCreatorData;
 using Cinemachine;
 using Train.Cameras;
+using Train.Timer;
 
 namespace Train.Infrastucture
 {
@@ -41,6 +42,12 @@ namespace Train.Infrastucture
         [SerializeField]
         private SetNextCameraButton _setNextCameraButtonPrefab = null;
 
+        [SerializeField]
+        private int _gameTime = 60;
+
+        [SerializeField]
+        private AbstractTimerView _timerViewPrefab = null;
+
         private PathCreator _pathCreator;
         private GameObject _trainView;
         private IPathFollower _pathFollower;
@@ -57,6 +64,8 @@ namespace Train.Infrastucture
         private CinemachineVirtualCameraBase[] _cinemachineVirtialCameras;
         private SetNextCameraButton _setNextCameraButton;
         private BonusesData _bonusesData;
+        private ITimer _timer;
+        private AbstractTimerView _timerView;
 
         private void Awake()
         {
@@ -99,6 +108,10 @@ namespace Train.Infrastucture
             _cameraSwitcher = new CameraSwitcher(_cinemachineVirtialCameras, 0);
             _setNextCameraButton = Instantiate(_setNextCameraButtonPrefab, _canvas.transform);
             _setNextCameraButton.Construct(_cameraSwitcher);
+            _timer = new CustomTimer(_gameTime);
+            _timerView = Instantiate(_timerViewPrefab, _canvas.transform);
+            _timerView.Construct(_timer);
+            _timer.StartTimer();
         }
 
         private void OnDestroy()
@@ -109,6 +122,7 @@ namespace Train.Infrastucture
             foreach (IStation station in _stations)
                 station.Dispose();
             _trainMovement.Dispose();
+            _timer.StopTimer();
         }
     }
 }
