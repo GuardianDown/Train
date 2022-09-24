@@ -9,7 +9,7 @@ namespace Train.UI
     {
         protected BonusesData _bonusesData;
 
-        protected abstract void UpdateView(int amountOfBonuses);
+        public abstract void UpdateView(int amountOfBonuses);
 
         public void Construct(BonusesData bonusesData)
         {
