@@ -8,11 +8,11 @@ namespace Train.UI
 {
     public class TakeBonusButtonActivator : IDisposable
     {
-        private readonly Button _takeBonusButton;
+        private readonly GameObject _takeBonusButton;
         private readonly IActiveStationsQueue _activeStationsQueue;
         private readonly IPathFollower _pathFollower;
 
-        public TakeBonusButtonActivator(Button takeBonusButton, IActiveStationsQueue activeStationsQueue, IPathFollower pathFollower)
+        public TakeBonusButtonActivator(GameObject takeBonusButton, IActiveStationsQueue activeStationsQueue, IPathFollower pathFollower)
         {
             _takeBonusButton = takeBonusButton;
             _activeStationsQueue = activeStationsQueue;
@@ -42,12 +42,12 @@ namespace Train.UI
         private void EnableButton()
         {
             if(_pathFollower.Speed <= 0f && _activeStationsQueue.ActiveStations.Count > 0)
-                _takeBonusButton.gameObject.SetActive(true);
+                _takeBonusButton.SetActive(true);
         }
 
         private void DisableButton()
         {
-            _takeBonusButton.gameObject.SetActive(false);
+            _takeBonusButton.SetActive(false);
         }
     }
 }

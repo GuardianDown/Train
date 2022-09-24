@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Train.TrainMovement
 {
@@ -6,6 +7,7 @@ namespace Train.TrainMovement
     {
         float Input { get; set; }
         float Speed { get; }
+        Transform FollowerView { get; }
 
         event Action onStartMovement;
         event Action onStopMovement;
