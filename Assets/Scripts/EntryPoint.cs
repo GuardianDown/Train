@@ -7,6 +7,8 @@ using Train.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using PathCreatorData = Train.TrainMovement.PathCreatorData;
+using Cinemachine;
+using Train.Cameras;
 
 namespace Train.Infrastucture
 {
@@ -25,13 +27,19 @@ namespace Train.Infrastucture
         private Canvas _canvasPrefab = null;
 
         [SerializeField]
-        private Button _takeBonusButtonPrefab = null;
+        private TakeBonusButton _takeBonusButtonPrefab = null;
 
         [SerializeField]
         private Joystick _joystickPrefab = null;
 
         [SerializeField]
-        private Text _bonusViewPrefab = null;
+        private AbstractAmountOfBonusesView _bonusViewPrefab = null;
+
+        [SerializeField]
+        private CinemachineVirtualCameraBase[] _virtualCameraPrefabs = null;
+
+        [SerializeField]
+        private SetNextCameraButton _setNextCameraButtonPrefab = null;
 
         private PathCreator _pathCreator;
         private GameObject _trainView;
@@ -39,12 +47,16 @@ namespace Train.Infrastucture
         private IStation[] _stations;
         private IActiveStationsQueue _activeStationQueue;
         private IDisposable _takeBonusButtonActivator;
-        private Button _takeBonusButton;
+        private TakeBonusButton _takeBonusButton;
         private Joystick _joystick;
         private IMovement _trainMovement;
         private Canvas _canvas;
-        private Text _bonusView;
-        private IDisposable _bonusCounter;
+        private AbstractAmountOfBonusesView _bonusView;
+        private IBonusCounter _bonusCounter;
+        private ICameraSwitcher _cameraSwitcher;
+        private CinemachineVirtualCameraBase[] _cinemachineVirtialCameras;
+        private SetNextCameraButton _setNextCameraButton;
+        private BonusesData _bonusesData;
 
         private void Awake()
         {
@@ -65,11 +77,28 @@ namespace Train.Infrastucture
             _pathFollower = new PathFollower(_pathCreator, _trainView.transform,
                 _trainData.MaxSpeed, _trainData.Acceleration, _trainData.EndOfPathInstruction);
             _pathFollower.StartFollow();
-            _takeBonusButtonActivator = new TakeBonusButtonActivator(_takeBonusButton, _activeStationQueue, _pathFollower);
+            _takeBonusButtonActivator = new TakeBonusButtonActivator(_takeBonusButton.gameObject, _activeStationQueue, _pathFollower);
             _joystick = Instantiate(_joystickPrefab, _canvas.transform);
             _trainMovement = new Movement(_pathFollower, _joystick);
             _trainMovement.StartMovement();
-            _bonusCounter = new BonusCounter(_takeBonusButton, _activeStationQueue, _bonusView);
+            _bonusesData = new BonusesData();
+            _bonusCounter = new BonusCounter(_activeStationQueue, _bonusesData);
+            _bonusView.Construct(_bonusesData);
+            _takeBonusButton.Construct(_bonusCounter);
+            _cinemachineVirtialCameras = new CinemachineVirtualCameraBase[_virtualCameraPrefabs.Length];
+            for (int i = 0; i < _virtualCameraPrefabs.Length; ++i)
+            {
+                CinemachineVirtualCameraBase virtualCamera = Instantiate(_virtualCameraPrefabs[i],
+                    _virtualCameraPrefabs[i].transform.position,
+                    _virtualCameraPrefabs[i].transform.rotation,
+                    _pathFollower.FollowerView.transform);
+                virtualCamera.Follow = _pathFollower.FollowerView;
+                virtualCamera.LookAt = _pathFollower.FollowerView;
+                _cinemachineVirtialCameras[i] = virtualCamera;
+            }
+            _cameraSwitcher = new CameraSwitcher(_cinemachineVirtialCameras, 0);
+            _setNextCameraButton = Instantiate(_setNextCameraButtonPrefab, _canvas.transform);
+            _setNextCameraButton.Construct(_cameraSwitcher);
         }
 
         private void OnDestroy()
@@ -80,7 +109,6 @@ namespace Train.Infrastucture
             foreach (IStation station in _stations)
                 station.Dispose();
             _trainMovement.Dispose();
-            _bonusCounter.Dispose();
         }
     }
 }

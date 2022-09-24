@@ -173,9 +173,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7cd3c22b14d86144d85ff78ea95f90cd, type: 2}
   - {fileID: 11400000, guid: 22428abdcbfbb724fac7ad651c294cf6, type: 2}
   _canvasPrefab: {fileID: 4156667596220832131, guid: e7f660c6c076bba4f8ee40c49d2b7acc, type: 3}
-  _takeBonusButtonPrefab: {fileID: 4782468450633462106, guid: 6686eee7a02499b4cb24f4372be5a030, type: 3}
+  _takeBonusButtonPrefab: {fileID: -6561071684644922832, guid: 6686eee7a02499b4cb24f4372be5a030, type: 3}
   _joystickPrefab: {fileID: 8170153791668043265, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
-  _bonusViewPrefab: {fileID: 4024444756966416339, guid: 6881ee6e49a1a66459af114a6a81403c, type: 3}
+  _bonusViewPrefab: {fileID: -9044725835698528939, guid: 6881ee6e49a1a66459af114a6a81403c, type: 3}
+  _virtualCameraPrefabs:
+  - {fileID: 1772050220265920363, guid: ded9495a2f6a26a4ba3ad2d732909f57, type: 3}
+  - {fileID: 1462233900395001432, guid: 5b017f45a1936954887b7f6d3b21d992, type: 3}
+  _setNextCameraButtonPrefab: {fileID: 8369978003639633240, guid: ca4bb0dfa30a31d418cae032838862cb, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +284,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -318,9 +323,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -345,13 +350,47 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.24610752, y: -0.3783208, z: 0.105068676, w: 0.88615185}
-  m_LocalPosition: {x: 6.5938587, y: 3.5654402, z: -0.652135}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1536369665
 GameObject:
   m_ObjectHideFlags: 0

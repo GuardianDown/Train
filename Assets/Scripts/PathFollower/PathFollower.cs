@@ -44,6 +44,8 @@ namespace Train.TrainMovement
             }
         }
 
+        public Transform FollowerView => _followerView;
+
         public PathFollower(PathCreator pathCreator, Transform followerView, 
             float maxSpeed, float acceleration, EndOfPathInstruction endOfPathInstruction)
         {
