@@ -186,6 +186,8 @@ MonoBehaviour:
   _fixViewPrefab: {fileID: 7391260582306434401, guid: 0698845b2509f974da4edc542ab3547f, type: 3}
   _breakingData: {fileID: 11400000, guid: 2f5cebf12c88974448a2f1d77ed39847, type: 2}
   _canvasPrefab: {fileID: 4156667596220832131, guid: e7f660c6c076bba4f8ee40c49d2b7acc, type: 3}
+  _hornAudioSourcePrefab: {fileID: 7235354936256956130, guid: 748eeb23ec714484ba34ba54d3a884e4, type: 3}
+  _playHornSoundViewPrefab: {fileID: -2664186490399993763, guid: 569400855143939478c832a7a76e6e10, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

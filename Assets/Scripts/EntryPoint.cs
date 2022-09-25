@@ -13,6 +13,7 @@ using Train.Breaking;
 using System.Collections.Generic;
 using Train.Save;
 using Train.GameOver;
+using Train.Horn;
 
 namespace Train.Infrastucture
 {
@@ -73,6 +74,13 @@ namespace Train.Infrastucture
         [SerializeField]
         private Canvas _canvasPrefab = null;
         #endregion
+        #region Horn
+        [SerializeField]
+        private AudioSource _hornAudioSourcePrefab = null;
+
+        [SerializeField]
+        private AbstractPlayHornSoundView _playHornSoundViewPrefab = null;
+        #endregion
         #endregion
 
         #region Private fields
@@ -119,6 +127,10 @@ namespace Train.Infrastucture
         #region Canvas
         private Canvas _canvas;
         #endregion
+        #region Horn
+        private IHornSound _hornSound;
+        private AbstractPlayHornSoundView _playHornSoundView;
+        #endregion
         #endregion
 
         private void Awake()
@@ -132,6 +144,7 @@ namespace Train.Infrastucture
             InitializeResults();
             InitializeBreaking();
             InitializeSaving();
+            InitializeHorn();
         }
 
         private void OnDestroy()
@@ -240,6 +253,13 @@ namespace Train.Infrastucture
             List<ISaveData> saveData = new List<ISaveData>();
             saveData.Add(_bonusesData);
             _saver = new GameSaver(saveData);
+        }
+
+        private void InitializeHorn()
+        {
+            _hornSound = new HornSound(_hornAudioSourcePrefab);
+            _playHornSoundView = Instantiate(_playHornSoundViewPrefab, _canvas.transform);
+            _playHornSoundView.Construct(_hornSound);
         }
     }
 }
