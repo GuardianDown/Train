@@ -1,7 +1,7 @@
 using System;
 using Train.Timer;
 
-namespace Train.Results
+namespace Train.GameOver
 {
     public class GameOverByTime : IGameOver
     {

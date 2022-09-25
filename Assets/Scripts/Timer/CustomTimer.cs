@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Train.Timer
 {
@@ -16,10 +15,7 @@ namespace Train.Timer
         public event Action<int> onTimeChange;
         public event Action onTimeEnd;
 
-        public CustomTimer(int timeInSeconds)
-        {
-            _time = timeInSeconds;
-        }
+        public CustomTimer(int timeInSeconds) => _time = timeInSeconds;
 
         public async void StartTimer()
         {

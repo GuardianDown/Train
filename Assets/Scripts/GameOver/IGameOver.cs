@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Train.Results
+namespace Train.GameOver
 {
     public interface IGameOver : IDisposable
     {

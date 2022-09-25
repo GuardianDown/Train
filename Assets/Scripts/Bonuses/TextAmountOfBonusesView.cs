@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Train.UI
+namespace Train.Bonuses
 {
     public class TextAmountOfBonusesView : AbstractAmountOfBonusesView
     {

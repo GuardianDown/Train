@@ -1,7 +1,4 @@
-using System;
 using Train.Stations;
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace Train.Bonuses
 {
@@ -18,7 +15,7 @@ namespace Train.Bonuses
 
         public void TakeBonus()
         {
-            _bonusesData._AmountOfBonuses += _activeStationsQueue.ActiveStations.Count;
+            _bonusesData.AmountOfBonuses += _activeStationsQueue.ActiveStations.Count;
             _activeStationsQueue.Clear();
         }
     }

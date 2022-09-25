@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public abstract class AbstractBestResultView<T> : MonoBehaviour
+namespace Train.Results
 {
-    protected T _bestResult;
-
-    protected virtual void OnEnable() => UpdateView();
-
-    protected abstract void LoadResult();
-
-    protected abstract void SetToView();
-
-    public virtual void UpdateView()
+    public abstract class AbstractBestResultView<T> : MonoBehaviour
     {
-        LoadResult();
-        SetToView();
+        protected T _bestResult;
+
+        protected virtual void OnEnable() => UpdateView();
+
+        protected abstract void LoadResult();
+
+        protected abstract void SetToView();
+
+        public virtual void UpdateView()
+        {
+            LoadResult();
+            SetToView();
+        }
     }
 }

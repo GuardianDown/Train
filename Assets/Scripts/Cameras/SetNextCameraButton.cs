@@ -1,9 +1,7 @@
-using System;
-using Train.Cameras;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Train.UI
+namespace Train.Cameras
 {
     public class SetNextCameraButton : MonoBehaviour
     {
