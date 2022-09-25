@@ -18,6 +18,8 @@ namespace Train.TrainMovement
         private CancellationTokenSource _cancellationTokenSource;
         private Task _movementTask;
 
+        public bool IsBrake { get; set; }
+
         public Movement(IPathFollower pathFollower, Joystick joystick)
         {
             _pathFollower = pathFollower;
@@ -58,7 +60,9 @@ namespace Train.TrainMovement
                     currentInput += Input.GetAxis(VerticalAxisName);
 #endif
                     currentInput += _joystick.Vertical;
-                    _pathFollower.Input = currentInput;
+                    if (IsBrake)
+                        currentInput = -1;
+                    _pathFollower.Speed = currentInput;
                     await Task.Yield();
                 }
             }

@@ -5,8 +5,7 @@ namespace Train.TrainMovement
 {
     public interface IPathFollower : IDisposable
     {
-        float Input { get; set; }
-        float Speed { get; }
+        float Speed { get; set; }
         Transform FollowerView { get; }
 
         event Action onStartMovement;

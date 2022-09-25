@@ -1,8 +1,9 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Train.Bonuses
 {
-    public class BonusesData
+    public class BonusesData : ISaveData
     {
         private int _amountOfBonuses;
 
@@ -19,6 +20,12 @@ namespace Train.Bonuses
                     onAmountOfBonusesChange?.Invoke(_amountOfBonuses);
                 }
             }
+        }
+
+        public void Save()
+        {
+            if(PlayerPrefs.GetInt(Constants.BestResultPrefsKey, 0) < _amountOfBonuses)
+                PlayerPrefs.SetInt(Constants.BestResultPrefsKey, _amountOfBonuses);
         }
     }
 }

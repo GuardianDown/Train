@@ -21,25 +21,27 @@ namespace Train.TrainMovement
         public event Action onStartMovement;
         public event Action onStopMovement;
 
-        public float Input { get; set; }
-
         public float Speed
         {
             get => _speed;
-            private set
+            set
             {
-                if (value >= 0f && value <= _maxSpeed)
+                if (_speed >= 0f && _speed <= _maxSpeed)
                 {
                     if (value > 0f && _speed == 0f)
                     {
                         onStartMovement?.Invoke();
                     }
-                    _speed = value;
+                    _speed += value * _acceleration;
                 }
-                else if(value < 0f)
+                if (_speed < 0f)
                 {
                     _speed = 0f;
                     onStopMovement?.Invoke();
+                }
+                else if(_speed > _maxSpeed)
+                {
+                    _speed = _maxSpeed;
                 }
             }
         }
@@ -86,7 +88,6 @@ namespace Train.TrainMovement
             {
                 while (!token.IsCancellationRequested)
                 {
-                    Speed += Input * _acceleration;
                     distanceTravelled += Speed * Time.deltaTime;
                     _followerView.position = _pathCreator.path.GetPointAtDistance(distanceTravelled, _endOfPathInstruction);
                     _followerView.rotation = _pathCreator.path.GetRotationAtDistance(distanceTravelled, _endOfPathInstruction);
