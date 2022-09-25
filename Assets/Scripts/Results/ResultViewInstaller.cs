@@ -11,14 +11,16 @@ namespace Train.Results
         private readonly IGameOver _gameOver;
         private readonly ResultView _resultViewPrefab;
         private readonly BonusesData _bonusesData;
+        private readonly Canvas _canvas;
 
         private ResultView _resultView;
 
-        public ResultViewInstaller(IGameOver gameOver, ResultView resultViewPrefab, BonusesData bonusesData)
+        public ResultViewInstaller(IGameOver gameOver, ResultView resultViewPrefab, BonusesData bonusesData, Canvas canvas)
         {
             _gameOver = gameOver;
             _resultViewPrefab = resultViewPrefab;
             _bonusesData = bonusesData;
+            _canvas = canvas;
 
             Subscribe();
         }
@@ -34,6 +36,7 @@ namespace Train.Results
             _resultView = Object.Instantiate(_resultViewPrefab);
             _resultView.AmountOfBonusesView.Construct(_bonusesData);
             _resultView.AmountOfBonusesView.UpdateView(_bonusesData._AmountOfBonuses);
+            _canvas.gameObject.SetActive(false);
         }
     }
 }

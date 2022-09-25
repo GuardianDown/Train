@@ -51,7 +51,7 @@ namespace Train.Timer
                 onTimeChange(_currentTime);
                 while (!token.IsCancellationRequested && _currentTime > 0)
                 {
-                    await Task.Delay(1000);
+                    await Task.Delay(1000, token);
                     _currentTime -= 1;
                     onTimeChange?.Invoke(_currentTime);
                 }
