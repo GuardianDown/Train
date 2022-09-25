@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Train.Bonuses;
 using UnityEngine;
 
-namespace Train.UI
+namespace Train.Bonuses
 {
     public abstract class AbstractAmountOfBonusesView : MonoBehaviour
     {

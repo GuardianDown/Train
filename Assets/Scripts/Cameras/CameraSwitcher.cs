@@ -1,4 +1,3 @@
-using UnityEngine;
 using Cinemachine;
 
 namespace Train.Cameras

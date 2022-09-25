@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Train.TrainMovement;
-using UnityEngine;
 
 namespace Train.Breaking
 {
@@ -11,14 +8,12 @@ namespace Train.Breaking
         private readonly IBreaking _breaking;
         private readonly IRepair _repair;
         private IMovement _movement;
-        private IPathFollower _pathFollower;
 
-        public BreakingMovement(IBreaking breaking, IRepair repair, IMovement movement, IPathFollower pathFollower)
+        public BreakingMovement(IBreaking breaking, IRepair repair, IMovement movement)
         {
             _breaking = breaking;
             _repair = repair;
             _movement = movement;
-            _pathFollower = pathFollower;
 
             Subscribe();
         }

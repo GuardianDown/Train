@@ -1,4 +1,4 @@
-﻿namespace Train.Bonuses
+﻿namespace Train.Save
 {
     public interface ISaveData
     {

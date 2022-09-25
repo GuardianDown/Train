@@ -11,10 +11,10 @@ namespace Train.TrainMovement
         private readonly PathCreator _pathCreator;
         private readonly Transform _followerView;
         private readonly float _maxSpeed;
+        private readonly float _acceleration;
+        private readonly EndOfPathInstruction _endOfPathInstruction;
 
-        private float _acceleration;
         private float _speed;
-        private EndOfPathInstruction _endOfPathInstruction;
         private CancellationTokenSource _cancellationTokenSource;
         private Task _followTask;
 
@@ -29,9 +29,8 @@ namespace Train.TrainMovement
                 if (_speed >= 0f && _speed <= _maxSpeed)
                 {
                     if (value > 0f && _speed == 0f)
-                    {
                         onStartMovement?.Invoke();
-                    }
+
                     _speed += value * _acceleration;
                 }
                 if (_speed < 0f)
@@ -40,9 +39,7 @@ namespace Train.TrainMovement
                     onStopMovement?.Invoke();
                 }
                 else if(_speed > _maxSpeed)
-                {
                     _speed = _maxSpeed;
-                }
             }
         }
 

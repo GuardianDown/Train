@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Train.TrainMovement;
-using UnityEngine;
 
 namespace Train.Breaking
 {
@@ -10,7 +6,6 @@ namespace Train.Breaking
     {
         private readonly IBreaking _breaking;
         private readonly float _fullRepairValue;
-        private readonly IMovement _movement;
 
         private float _currentRepairValue;
         private float _fixDelta;
@@ -21,11 +16,10 @@ namespace Train.Breaking
         public event Action<float, float> onRepairValueChange;
         public event Action onFullRepair;
 
-        public Repair(IBreaking breaking, float fullRepairValue, IMovement movement)
+        public Repair(IBreaking breaking, float fullRepairValue)
         {
             _breaking = breaking;
             _fullRepairValue = fullRepairValue;
-            _movement = movement;
 
             Subscribe();
         }

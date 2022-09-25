@@ -1,4 +1,5 @@
 ﻿using System;
+using Train.Save;
 using UnityEngine;
 
 namespace Train.Bonuses
@@ -9,7 +10,7 @@ namespace Train.Bonuses
 
         public event Action<int> onAmountOfBonusesChange;
 
-        public int _AmountOfBonuses
+        public int AmountOfBonuses
         {
             get => _amountOfBonuses;
             set

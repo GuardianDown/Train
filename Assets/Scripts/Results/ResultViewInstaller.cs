@@ -1,8 +1,8 @@
 using System;
 using UnityEngine;
-using Train.UI;
 using Object = UnityEngine.Object;
 using Train.Bonuses;
+using Train.GameOver;
 
 namespace Train.Results
 {
@@ -35,7 +35,7 @@ namespace Train.Results
         {
             _resultView = Object.Instantiate(_resultViewPrefab);
             _resultView.AmountOfBonusesView.Construct(_bonusesData);
-            _resultView.AmountOfBonusesView.UpdateView(_bonusesData._AmountOfBonuses);
+            _resultView.AmountOfBonusesView.UpdateView(_bonusesData.AmountOfBonuses);
             _canvas.gameObject.SetActive(false);
         }
     }

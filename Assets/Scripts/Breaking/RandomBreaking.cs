@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Train.TrainMovement;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Train.Breaking
@@ -14,15 +11,13 @@ namespace Train.Breaking
     {
         private readonly int _breakChanceInSecond;
         private readonly IEnumerable<float> _fixDeltas;
-        private readonly IMovement _movement;
 
         public event Action<float> onBreaking;
 
-        public RandomBreaking(int breakChanceInSecond, IEnumerable<float> fixDeltas, IMovement movement)
+        public RandomBreaking(int breakChanceInSecond, IEnumerable<float> fixDeltas)
         {
             _breakChanceInSecond = breakChanceInSecond;
             _fixDeltas = fixDeltas;
-            _movement = movement;
         }
 
         private CancellationTokenSource _cancellationTokenSource;

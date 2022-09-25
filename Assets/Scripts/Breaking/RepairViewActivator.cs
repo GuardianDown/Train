@@ -43,25 +43,30 @@ namespace Train.Breaking
 
         private void ActivateView(float fixDelta)
         {
-            if (_repairProgressView == null)
-            {
-                _repairProgressView = Object.Instantiate(_repairProgressViewPrefab, _canvas.transform);
-                _repairProgressView.Construct(_repair);
-            }
-            else
-            {
-                _repairProgressView.gameObject.SetActive(true);
-            }
+            SetActiveRepairView();
+            SetActiveFixView();
+        }
 
+        private void SetActiveFixView()
+        {
             if (_fixView == null)
             {
                 _fixView = Object.Instantiate(_fixViewPrefab, _canvas.transform);
                 _fixView.Construct(_repair);
             }
             else
-            {
                 _fixView.gameObject.SetActive(true);
+        }
+
+        private void SetActiveRepairView()
+        {
+            if (_repairProgressView == null)
+            {
+                _repairProgressView = Object.Instantiate(_repairProgressViewPrefab, _canvas.transform);
+                _repairProgressView.Construct(_repair);
             }
+            else
+                _repairProgressView.gameObject.SetActive(true);
         }
 
         private void DeactivateView()
